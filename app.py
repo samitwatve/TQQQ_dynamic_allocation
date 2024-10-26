@@ -72,7 +72,7 @@ def get_data(start, end):
     # Fetch QQQ data
     qqq = yf.download('QQQ', start=start, end=end)
     qqq = qqq['Adj Close']
-    qqq = qqq.rename('QQQ')
+    qqq.name = 'QQQ'  # Corrected line
 
     # Calculate daily returns for QQQ
     qqq_returns = qqq.pct_change().dropna()
@@ -84,7 +84,7 @@ def get_data(start, end):
 
     # Create synthetic TQQQ price series
     tqqq = (1 + tqqq_returns).cumprod() * 100  # Start from $100 for TQQQ
-    tqqq = tqqq.rename('TQQQ')
+    tqqq.name = 'TQQQ'  # Corrected line
 
     # Combine QQQ and TQQQ data
     data = pd.concat([qqq, tqqq], axis=1).dropna()
